@@ -1,0 +1,16 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: proxy_messenger_development
+
+test:
+  <<: *default
+  database: proxy_messenger_test
+
+production:
+  <<: *default
+  database: proxy_messenger_production
