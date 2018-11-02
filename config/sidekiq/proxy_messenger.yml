@@ -1,0 +1,4 @@
+:concurrency: 1
+:retry: 0
+:queues:
+  - proxy_messenger

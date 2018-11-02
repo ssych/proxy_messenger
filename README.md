@@ -1,24 +1,26 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Для развёртывания локально
 
-Things you may want to cover:
+bundle install --without production
+rake db:setup
+rails s
+sidekiq -C config/sidekiq/proxy_messenger.yml
 
-* Ruby version
+Пример запросов:
 
-* System dependencies
+Отправить сообщение:
 
-* Configuration
+curl -X POST \
+  http://localhost:3000/v1/telegram.json \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "user_id": 1,
+  "data": "text message"
+}'
 
-* Database creation
+Получить результат:
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+curl -X GET \
+  http://localhost:3000/v1/telegram/b3798fe5-2809-4d79-98cb-656295be3ca1.json \
+  -H 'Content-Type: application/json' \

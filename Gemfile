@@ -9,6 +9,8 @@ gem 'rails', '~> 5.1.6'
 gem 'pg'
 gem 'puma', '~> 3.7'
 gem 'sidekiq'
+gem 'aasm'
+gem 'jbuilder'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
