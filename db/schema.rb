@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181102114359) do
+ActiveRecord::Schema.define(version: 20181105133137) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,11 +19,20 @@ ActiveRecord::Schema.define(version: 20181102114359) do
   create_table "messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "data", null: false
     t.string "user_id", null: false
-    t.string "messager_type", null: false
+    t.string "provider", null: false
     t.string "state", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.uuid "package_id"
+    t.index ["package_id"], name: "index_messages_on_package_id"
+  end
+
+  create_table "packages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
   end
 
+  add_foreign_key "messages", "packages"
 end

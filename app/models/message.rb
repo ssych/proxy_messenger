@@ -2,6 +2,8 @@ class Message < ApplicationRecord
   validates :user_id, presence: true
   validates :data, presence: true
 
+  has_one :package
+
   include AASM
   
   aasm column: :state do

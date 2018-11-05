@@ -2,12 +2,12 @@ class V1::MessagesController < V1::ApplicationController
   before_action :set_message, only: [:show]
 
   def create
-    messager_type = params['type']
+    provider = params['provider']
     user_id = message_params[:user_id]
     data = message_params[:data]
 
-    @message = Message.create!(data: data, messager_type: messager_type, user_id: user_id)
-    [messager_type, '_send_msg_job'].join.classify.constantize.perform_later(@message.id)
+    @message = Message.create!(data: data, provider: provider, user_id: user_id)
+    SendMsgJob.perform_later(@message.id)
   end
 
   def show
@@ -20,7 +20,7 @@ class V1::MessagesController < V1::ApplicationController
   end
 
   def message_params
-    params.permit!
+    params.permit(:user_id, :data)
   end
 
 end
